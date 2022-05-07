@@ -31,12 +31,54 @@ namespace ETT.model
             this.rooms = rooms;
         }
 
-        public List<Room> getRooms() {
-		    return rooms;
-	    }
-	    public void setRooms(List<Room> rooms) {
-		    this.rooms = rooms;
-	    }
-
+       public List<Course> getCourses() {
+		return courses;
+	}
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+	public List<Curricula> getCurricula() {
+		return curricula;
+	}
+	public void setCurricula(List<Curricula> curricula) {
+		this.curricula = curricula;
+	}
+	public int getPeriods() {
+		return periods;
+	}
+	public void setPeriods(int periods) {
+		this.periods = periods;
+	}
+	public decimal getPrimaryPrimaryDistance() {
+		return primaryPrimaryDistance;
+	}
+	public void setPrimaryPrimaryDistance(decimal primaryPrimaryDistance) {
+		this.primaryPrimaryDistance = primaryPrimaryDistance;
+	}
+	public decimal getPrimarySecondaryDistance() {
+		return primarySecondaryDistance;
+	}
+	public void setPrimarySecondaryDistance(decimal primarySecondaryDistance) {
+		this.primarySecondaryDistance = primarySecondaryDistance;
+	}
+	public int getSlotsPerDay() {
+		return slotsPerDay;
+	}
+	public void setSlotsPerDay(int slotsPerDay) {
+		this.slotsPerDay = slotsPerDay;
+	}
+	public List<String> getTeachers() {
+		return teachers;
+	}
+	public void setTeachers(List<String> teachers) {
+		this.teachers = teachers;
+	}
+	public List<Room> getRooms() {
+		return rooms;
+	}
+	public void setRooms(List<Room> rooms) {
+		this.rooms = rooms;
+	}
+	
     }
 }

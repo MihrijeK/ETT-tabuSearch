@@ -19,6 +19,18 @@ namespace ETT.model
             this.assignments = assignments;
             this.cost = cost;
         }
+
+        public int getCost() {
+		    return cost;
+        }
+        public void setCost(int cost) {
+            this.cost = cost;
+        } 
+
+        // public List<Assignment> assignmentss(List<Assignment> assignments) {
+		// 	this.assignments = assignments;
+		// 	return this.assignments;
+		// }
         public List<Assignment> swap() {
             randomGenerator = new Random();
             Assignment firstAssignment = this.assignments[randomGenerator.Next(this.assignments.Count)];
