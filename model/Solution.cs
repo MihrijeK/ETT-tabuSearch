@@ -39,21 +39,24 @@ namespace ETT.model
 		return assignments;
 	}
 	
-	public List<Assignment> mutation(Instance inst) {
-		randomGenerator = new Random();
-		Assignment firstAssignment = this.assignments.get(randomGenerator.nextInt(this.assignments.size()));
-		Event firstEvent = firstAssignment.getEvents().get(0);
-		if(firstEvent != null) {
-			Optional<Room> room = inst.getRooms().stream().filter(rt -> rt.getRoom().equals(firstEvent.getRoom())).findAny();
-			if(room.isPresent()) {
-				List<Room> rooms = inst.getRooms().stream().filter(r -> r.getType().equals(room.get().getType())).collect(Collectors.toList());
-				Collections.shuffle(rooms);
-				firstEvent.setRoom(rooms.get(0).getRoom());
-			}
-			this.setAssignment(assignments);
-		}
-		return assignments;
-	}
+	public List<Assignment> mutation(Instance inst)
+		{
+			randomGenerator = new Random();
 
+			Assignment firstAssignment = this.assignments[randomGenerator.Next(assignments.Count())];
+			Event firstEvent = firstAssignment.getEvents()[0];
+			if (firstEvent != null)
+			{
+				Room room = inst.getRooms().Where(rt => rt.getRoom().Equals(firstEvent.getRoom())).FirstOrDefault();
+				if (room !=null)
+				{
+					List<Room> rooms = inst.getRooms().Where(r => r.getType().Equals(room.getType())).ToList();
+					var shuffledrooms = rooms.OrderBy(a => rng.Next()).ToList();
+					firstEvent.setRoom(shuffledrooms[0].getRoom());
+				}
+				this.setAssignment(assignments);
+			}
+			return assignments;
+		}
     }
 }
