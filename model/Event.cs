@@ -14,6 +14,14 @@ namespace ETT.model
         //@JsonIgnore
         private int periodTimeslot { get; set; }
         private string room { get; set; }
+
+        public string getPeriod() {
+		    return period;
+	    }
+        
+        public void setPeriod(String period) {
+		    this.period = period;
+	    }
         public Event() { }
         public Event(string period, int periodDay, int periodTimeslot, string room)
         {

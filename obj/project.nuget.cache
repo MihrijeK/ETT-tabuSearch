@@ -1,11 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "n9EJ2iJSU7zIxf0L3NkRgyRTG0NMAUntEzY1uaB9XLNthT4p8ribITxaVchpT11FYJYxoDwI4vEVCO/E69r1sA==",
+  "dgSpecHash": "JIaWnjlzFono+9r+UMvv9fdjJDObcl43LbXLq1qxTfFeSswj4+Cdz3Qg93fGyNnLkkR0ECr76jZ0r6WxFYFleA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Mire\\source\\repos\\ETT\\ETT.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Mire\\.nuget\\packages\\dotliquid\\2.2.622\\dotliquid.2.2.622.nupkg.sha512",
-    "C:\\Users\\Mire\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.13\\microsoft.netcore.app.host.win-x64.5.0.13.nupkg.sha512"
-  ],
+  "projectFilePath": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

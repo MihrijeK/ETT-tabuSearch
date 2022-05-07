@@ -1,34 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mire\\source\\repos\\ETT\\ETT.csproj": {}
+    "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mire\\source\\repos\\ETT\\ETT.csproj": {
+    "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mire\\source\\repos\\ETT\\ETT.csproj",
+        "projectUniqueName": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
         "projectName": "ETT",
-        "projectPath": "C:\\Users\\Mire\\source\\repos\\ETT\\ETT.csproj",
-        "packagesPath": "C:\\Users\\Mire\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mire\\source\\repos\\ETT\\obj\\",
+        "projectPath": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Mire\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -46,12 +37,6 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "dependencies": {
-            "DotLiquid": {
-              "target": "Package",
-              "version": "[2.2.622, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -62,18 +47,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[5.0.13, 5.0.13]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
