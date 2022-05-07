@@ -20,23 +20,23 @@ namespace ETT.model
             this.cost = cost;
         }
         public List<Assignment> swap() {
-		randomGenerator = new Random();
-		Assignment firstAssignment = this.assignments[randomGenerator.Next(this.assignments.Count)];
-		Assignment secondAssignment = this.assignments[randomGenerator.Next(this.assignments.Count)];
-		List<Event> firstEvents = firstAssignment.getEvents();
-		List<Event> secondEvents = secondAssignment.getEvents();
-		Event secondEvent = secondAssignment.getEvents().Count == 0 ? null : secondAssignment.getEvents()[0];
-		Event firstEvent = firstAssignment.getEvents().Count == 0 ? null : firstAssignment.getEvents()[0];
-		if(firstEvents.Count != 0 && secondEvents.Count != 0) {
-			String firstEventPeriod = firstEvent.getPeriod();
-			String secondEventPeriod = secondEvent.getPeriod();
-			secondEvent.setPeriod(firstEventPeriod);
-			firstEvent.setPeriod(secondEventPeriod);
-			firstEvents[0] = firstEvent;
-            secondEvents[0] = secondEvent;
-			this.setAssignment(assignments);
-		}
-		return assignments;
+            randomGenerator = new Random();
+            Assignment firstAssignment = this.assignments[randomGenerator.Next(this.assignments.Count)];
+            Assignment secondAssignment = this.assignments[randomGenerator.Next(this.assignments.Count)];
+            List<Event> firstEvents = firstAssignment.getEvents();
+            List<Event> secondEvents = secondAssignment.getEvents();
+            Event secondEvent = secondAssignment.getEvents().Count == 0 ? null : secondAssignment.getEvents()[0];
+            Event firstEvent = firstAssignment.getEvents().Count == 0 ? null : firstAssignment.getEvents()[0];
+            if(firstEvents.Count != 0 && secondEvents.Count != 0) {
+                String firstEventPeriod = firstEvent.getPeriod();
+                String secondEventPeriod = secondEvent.getPeriod();
+                secondEvent.setPeriod(firstEventPeriod);
+                firstEvent.setPeriod(secondEventPeriod);
+                firstEvents[0] = firstEvent;
+                secondEvents[0] = secondEvent;
+                this.setAssignment(assignments);
+            }
+            return assignments;
 	}
 	
 	public List<Assignment> mutation(Instance inst)
@@ -51,7 +51,7 @@ namespace ETT.model
 				if (room !=null)
 				{
 					List<Room> rooms = inst.getRooms().Where(r => r.getType().Equals(room.getType())).ToList();
-					var shuffledrooms = rooms.OrderBy(a => rng.Next()).ToList();
+					var shuffledrooms = rooms.OrderBy(a => randomGenerator.Next()).ToList();
 					firstEvent.setRoom(shuffledrooms[0].getRoom());
 				}
 				this.setAssignment(assignments);

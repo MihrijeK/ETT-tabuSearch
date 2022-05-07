@@ -21,5 +21,12 @@ namespace ETT.model
             this.curriculum = curriculum;
         }
 
+        public List<Room> getRooms() {
+		    return rooms;
+	    }
+	    public void setRooms(List<Room> rooms) {
+		    this.rooms = rooms;
+	    }
+
     }
 }

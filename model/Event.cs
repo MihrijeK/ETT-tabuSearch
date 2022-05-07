@@ -18,9 +18,17 @@ namespace ETT.model
         public string getPeriod() {
 		    return period;
 	    }
-        
+
         public void setPeriod(String period) {
 		    this.period = period;
+	    }
+
+        public String getRoom() {
+		    return room;
+	    }
+
+        public void setRoom(String room) {
+		    this.room = room;
 	    }
         public Event() { }
         public Event(string period, int periodDay, int periodTimeslot, string room)
