@@ -28,5 +28,20 @@ namespace ETT.model
 		    this.rooms = rooms;
 	    }
 
+        public Course getCourse() {
+		    return course;
+        }
+        public void setCourse(Course course) {
+            this.course = course;
+        }
+
+        public String getCurriculum() {
+		    return curriculum;
+        }
+
+        public void setCurriculum(String curriculum) {
+            this.curriculum = curriculum;
+        }
+
     }
 }

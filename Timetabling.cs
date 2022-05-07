@@ -1,45 +1,14 @@
 ﻿using System;
-using System.Net;
-using System.Text;
-using System.Threading;
+using System.Linq;
 using System.Collections.Generic;
 using ETT.model;
 namespace ETT
 {
-    // class Program
-    // {
-    //     public enum RoomType
-    //     {
-    //         SMALL,
-    //         MEDIUM,
-    //         LARGE 
-    //     }
-    //     static void Main(string[] args)
-    //     {
-    //         Console.WriteLine("Tipi: ");
-    //         var tipi = Console.ReadLine();
-    //         //fromString(tipi);
-    //     }
-    //     //public static RoomType fromString(string param)
-    //     //{
-    //     //    string[] values = Enum.GetNames(typeof(RoomType));
-    //     //    foreach (string s in values)
-    //     //    {
-    //     //        if (s == param)
-    //     //        {
-    //     //            Console.WriteLine(s);
-    //     //        }
-    //     //    }
-    //     //    return 0;
-    //     //}
-    // }
-    public class Timetabling {
+    class Timetabling {
 	
-        private static Dictionary<Period, List<Room>> periodRoomRelation = new Dictionary<Period, List<Room>>();
+        private static IDictionary<Period, List<Room>> periodRoomRelation = new Dictionary<Period, List<Room>>();
         private static int cost = 0;
         private static Solution best = null;
-        
-        // static void Main(string[] args) throws ParseException {
         static void Main(string[] args){
 
             Instance inst = JSONUtils.convert(JSONUtils.getFileData("src/main/java/com/timetabling/app/D1-2-16.json"), new TypeReference<Instance>(){});
@@ -67,7 +36,6 @@ namespace ETT
                 Console.WriteLine(R.getCost());
                 for (int i = 0; i < numberOfTweak; i++) {
                     cost = 0;
-                    //Apply operators mutation or swap or crossover:
                     Solution W = new Solution.Builder().assignments(applyTweaks(solution, inst)).cost(cost).build();
                     calculateCost(W, inst);
                     Console.WriteLine(W.getCost());
@@ -88,15 +56,14 @@ namespace ETT
             JSONUtils.saveFile(JSONUtils.convert(best), "Assignments.json");
         }
 
-        private static Solution generateSolution(Instance inst, List<Course> courses, List<Room> rooms,
-                List<Curricula> curriculas) {
-            List<Assignment> assignments = new List<>();
+        private static Solution generateSolution(Instance inst, List<Course> courses, List<Room> rooms, List<Curricula> curriculas) {
+            List<Assignment> assignments = new List<Assignment>();
             List<Exam> exams = new List<Exam>();
             periodRoomRelation = getPeriods(inst.getPeriods(), inst.getSlotsPerDay(), rooms);
-            curriculas.stream().forEach(curricula -> {
+            curriculas.ForEach(curricula => {
                 checkingConstraints(inst, courses, exams, curricula, curricula.getPrimaryCourses(), assignments, inst.getPrimaryPrimaryDistance());
                 checkingConstraints(inst, courses, exams, curricula, curricula.getSecondaryCourses(), assignments, inst.getPrimarySecondaryDistance());
-            });
+		    });
             return new Solution.Builder().assignments(assignments).cost(cost).build();
         }
         
@@ -105,85 +72,91 @@ namespace ETT
             return solution.mutation(inst);
         }
 
-        private static List<Assignment> checkingConstraints(Instance inst, List<Course> courses, List<Exam> exams, Curricula curricula,
-                List<String> curricumCourses, List<Assignment> assignments, BigDecimal distance) {
-            Collections.shuffle(curricumCourses);
-                for (String prCourse : curricumCourses) {
-                    Optional<Course> course = courses.stream().filter(cr -> cr.getCourse().equalsIgnoreCase(prCourse)).findAny();
-                    Entry<Period, List<Room>> periodAndCourseRoom = getRequestedCourseRooms(course.get(), exams, inst, curricula, distance ,curricumCourses);
-                    if(periodAndCourseRoom != null) {
-                        List<Room> selectedPeriod = periodAndCourseRoom.getValue().stream().filter(r -> r.getType().equals(course.get().getRoomsRequested().getType())).limit(course.get().getRoomsRequested().getNumber()).collect(Collectors.toList());
+        static List<Assignment> checkingConstraints(Instance inst, List<Course> courses, List<Exam> exams, Curricula curricula,
+                List<String> curricumCourses, List<Assignment> assignments, decimal distance) {
+            // // Collections.shuffle(curricumCourses);
+            Random randomGenerator = new Random();
+            var shuffleCurriculumCourses = curricumCourses.OrderBy(a => randomGenerator.Next()).ToList();
+            foreach (String prCourse in shuffleCurriculumCourses) {
+                Course course = courses.Where(cr => cr.getCourse().Equals(prCourse, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                Entry<Period, List<Room>> periodAndCourseRoom = getRequestedCourseRooms(course.get(), exams, inst, curricula, distance ,curricumCourses);
+                if(periodAndCourseRoom != null) {
+                      List<Room> selectedPeriod = periodAndCourseRoom.getValue().Where(r => r.getType().equals(course.get().getRoomsRequested().getType())).limit(course.get().getRoomsRequested().getNumber()).toList();
                         Exam exam = new Exam.Builder().course(course.get()).rooms(selectedPeriod)
                                 .period(periodAndCourseRoom.getKey()).curriculum(curricula.getCurriculum()).build();
-                        exams.add(exam);
-                        List<Event> events = new ArrayList<>();
-                        if(selectedPeriod.isEmpty()) {
-                            Event event = new Event.Builder().period(periodAndCourseRoom.getKey().getId()).periodDay(periodAndCourseRoom.getKey().getDay()).
-                                    periodTimeslot(periodAndCourseRoom.getKey().getTimeslot()).room("").build();
-                            events.add(event);
-                        } else {
-                            selectedPeriod.stream().forEach(period -> {
-                                Event event = new Event.Builder().period(periodAndCourseRoom.getKey().getId()).periodDay(periodAndCourseRoom.getKey().getDay()).
-                                        periodTimeslot(periodAndCourseRoom.getKey().getTimeslot()).room(period.getRoom()).build();
-                                events.add(event);
-                            });
-                        }
+                        exams.Add(exam);
+                        List<Event> events = new List<Event>();
+                        // if(selectedPeriod.Count == 0) {
+                        //     Event event = new Event.Builder().period(periodAndCourseRoom.getKey().getId()).periodDay(periodAndCourseRoom.getKey().getDay()).
+                        //             periodTimeslot(periodAndCourseRoom.getKey().getTimeslot()).room("").build();
+                        //     events.Add(event);
+                        // } 
+                        // else {
+                        //     selectedPeriod.ForEach(period => {
+                        //         Event event = new Event.Builder().period(periodAndCourseRoom.getKey().getId()).periodDay(periodAndCourseRoom.getKey().getDay()).
+                        //                 periodTimeslot(periodAndCourseRoom.getKey().getTimeslot()).room(period.getRoom()).build();
+                        //         events.Add(event);
+                        //     });
+                        // }
                         Assignment assignment = new Assignment.Builder().course(exam.getCourse().getCourse())
                                 .events(events).build();
-                        assignments.add(assignment);
-                        periodRoomRelation.remove(periodAndCourseRoom.getKey());
-                    }
+                        assignments.Add(assignment);
+                        periodRoomRelation.Remove(periodAndCourseRoom.getKey());
                 }
+            
+            }
+   
             return assignments;
+
         }
         
-        public static Map<Period, List<Room>> getPeriods(Integer day, Integer timeslots, List<Room> rooms) {
-            Map<Period, List<Room>> periodRooms = new HashMap<Period, List<Room>>();
+        static Dictionary<Period, List<Room>> getPeriods(int day, int timeslots, List<Room> rooms) {
+            Dictionary<Period, List<Room>> periodRooms = new Dictionary<Period, List<Room>>();
             int id = 0;
             for (int i = 1; i <= day/timeslots; i++) {
                 for (int j = 1; j <= timeslots; j++) {
-                    Period period = new Period.Builder().id(String.valueOf(id)).day(i).timeslot(j).build();
-                    periodRooms.put(period, rooms);
+                    Period period = new Period.Builder().id(Convert.ToString(id)).day(i).timeslot(j).build();
+                    periodRooms.Add(period, rooms);
                     id++;
                 }
             }
             return periodRooms;
         }
         
-        public static Entry<Period, List<Room>> getRequestedCourseRooms(Course course, List<Exam> exams, Instance inst, Curricula curricula, BigDecimal distance, List<String> courses) {
-            List<Room> rooms = inst.getRooms().stream().filter(room -> room.getType().equals(course.getRoomsRequested().getType()))
-                    .limit(course.getRoomsRequested().getNumber()).collect(Collectors.toList());
-            Map<Period, List<Room>> periodOfRooms = periodRoomRelation.entrySet().stream().filter(e -> CollectionUtils.containsAny(e.getValue(), rooms))
+        static Entry<Period, List<Room>> getRequestedCourseRooms(Course course, List<Exam> exams, Instance inst, Curricula curricula, BigDecimal distance, List<String> courses) {
+            List<Room> rooms = inst.getRooms().Where(room => room.getType().Equals(course.getRoomsRequested().getType()))
+                    .limit(course.getRoomsRequested().getNumber()).toList();
+            Dictionary<Period, List<Room>> periodOfRooms = periodRoomRelation.entrySet().Where(e => CollectionUtils.containsAny(e.getValue(), rooms))
                     .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
             if(exams.isEmpty()) {
-                return periodOfRooms.isEmpty() ? periodRoomRelation.entrySet().iterator().next() : periodOfRooms.entrySet().iterator().next();
+                return periodOfRooms.Count == 0 ? periodRoomRelation.entrySet().iterator().next() : periodOfRooms.entrySet().iterator().next();
             } else {
-                Map<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.isEmpty() ? periodRoomRelation : periodOfRooms;
+                Dictionary<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.Count == 0 ? periodRoomRelation : periodOfRooms;
                 Entry<Period, List<Room>> softConstraintRoomPeriod = checkPeriodSoftConstraint(availablePeriodOfRooms, exams, curricula, course, courses, distance);
                 if(softConstraintRoomPeriod != null) {
                     return softConstraintRoomPeriod;
                 }
-                Optional<Entry<Period, List<Room>>> periodOfRoomSelected = periodOfRooms.entrySet().stream().filter(
-                        e -> exams.stream().anyMatch(ex -> !ex.getCourse().getTeacher().equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
+                Entry<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().Where(
+                        e => exams.stream().anyMatch(ex -> !ex.getCourse().getTeacher().equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
                         .findFirst();
                 return periodOfRoomSelected.isPresent() ? periodOfRoomSelected.get() : null;
             }
         }
         
-        public static Entry<Period, List<Room>> checkPeriodSoftConstraint(Map<Period, List<Room>> periodOfRooms, List<Exam> exams, Curricula curricula, 
-                Course course, List<String> courses, BigDecimal distance) {
-            List<String> allCurriculumCourses = new ArrayList<String>(curricula.getPrimaryCourses());
-            allCurriculumCourses.addAll(curricula.getSecondaryCourses());
-            List<Exam> addedCurriculumCourses = exams.stream().filter(exam -> allCurriculumCourses.contains(exam.getCourse().getCourse())).collect(Collectors.toList());
-            Map<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.entrySet().stream().filter(
-                    e -> addedCurriculumCourses.stream().anyMatch(ex -> !ex.getCourse().getTeacher().equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
+        static Entry<Period, List<Room>> checkPeriodSoftConstraint(IDictionary<Period, List<Room>> periodOfRooms, List<Exam> exams, Curricula curricula, 
+                Course course, List<String> courses, decimal distance) {
+            List<String> allCurriculumCourses = new List<String>(curricula.getPrimaryCourses());
+            allCurriculumCourses.AddRange(curricula.getSecondaryCourses());
+            List<Exam> addedCurriculumCourses = exams.Where(exam => allCurriculumCourses.Contains(exam.getCourse().getCourse())).collect(Collectors.toList());
+            IDictionary<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.entrySet().Where(
+                    e => addedCurriculumCourses.stream().anyMatch(ex -> !ex.getCourse().getTeacher().equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
             Entry<Period, List<Room>> periodOfRoom = checkCourseDistanceSoftConstraint(availablePeriodOfRooms, exams, courses, course, distance);
             if(periodOfRoom != null) {
                 return periodOfRoom;
             }
-            Optional<Entry<Period, List<Room>>> periodOfRoomSelected = periodOfRooms.entrySet().stream().filter(
-                    e -> addedCurriculumCourses.stream().anyMatch(ex -> !ex.getCourse().getTeacher().equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
+            Entry<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().stream().filter(
+                    e -> addedCurriculumCourses.WhereAny(ex => !ex.getCourse().getTeacher().equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
                     .findFirst();
             if(periodOfRoomSelected.isPresent()) {
                 return periodOfRoomSelected.get();
@@ -191,18 +164,18 @@ namespace ETT
             return null;
         }
         
-        public static Entry<Period, List<Room>> checkCourseDistanceSoftConstraint(Map<Period, List<Room>> periodOfRooms, List<Exam> exams, List<String> courses, Course course, BigDecimal distance) {
-            List<Exam> addedCourses = exams.stream().filter(exam -> courses.contains(exam.getCourse().getCourse())).collect(Collectors.toList());
+        static Entry<Period, List<Room>> checkCourseDistanceSoftConstraint(IDictionary<Period, List<Room>> periodOfRooms, List<Exam> exams, List<String> courses, Course course, decimal distance) {
+            List<Exam> addedCourses = exams.Where(exam => courses.Contains(exam.getCourse().getCourse())).collect(Collectors.toList());
             Collections.sort(addedCourses, Comparator.comparing(o -> ((Exam) o).getPeriod().getDay()).reversed());
-            if(addedCourses.isEmpty()) {
+            if(addedCourses.Count == 0) {
                 return null;
             }
-            BigDecimal lastAddedExamDayPeriod = new BigDecimal (addedCourses.get(0).getPeriod().getDay());
-            Optional<Entry<Period, List<Room>>> periodOfRoomSelected = periodOfRooms.entrySet().stream().filter(e -> new BigDecimal(e.getKey().getDay()).compareTo(lastAddedExamDayPeriod.add(distance)) > 1 ).findFirst();
+            decimal lastAddedExamDayPeriod = new decimal (addedCourses.get(0).getPeriod().getDay());
+            Entry<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().stream().filter(e -> new BigDecimal(e.getKey().getDay()).compareTo(lastAddedExamDayPeriod.add(distance)) > 1 ).findFirst();
             return periodOfRoomSelected.isPresent() ? periodOfRoomSelected.get() : null;
         }
         
-        void calculateCost(Solution solution, Instance inst) {
+        static void calculateCost(Solution solution, Instance inst) {
             Map<String, List<String>> periodOfCourses = new HashMap<String, List<String>>();
             solution.getAssignment().forEach(assignment -> {
                 List<Event> assignmentEvents = assignment.getEvents();
@@ -234,7 +207,7 @@ namespace ETT
             
         }
 
-        private static void checkSecondConstraintCost(Solution solution, Instance inst, List<String> curriculaCourses) {
+        static void checkSecondConstraintCost(Solution solution, Instance inst, List<String> curriculaCourses) {
             List<Assignment> filteredAssignments = solution.getAssignment().stream().filter(a -> curriculaCourses.contains(a.getCourse())).collect(Collectors.toList());
             Collections.sort(filteredAssignments, Comparator.comparing(a -> ((Assignment) a).getEvents().get(0).getPeriodDay()).reversed());
             for (int i = 0; i < filteredAssignments.size()-1; i++) {
@@ -243,6 +216,7 @@ namespace ETT
                     cost = cost + 1;
                 }
             }
+            
         }
 
     }

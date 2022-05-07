@@ -19,5 +19,26 @@ namespace ETT.model
             this.secondaryCourses = secondaryCourses;
         }
 
+        public List<String> getPrimaryCourses() {
+			return primaryCourses;
+		}
+		public void setPrimaryCourses(List<String> primaryCourses) {
+			this.primaryCourses = primaryCourses;
+		}
+
+        public List<String> getSecondaryCourses() {
+			return secondaryCourses;
+		}
+		public void setSecondaryCourses(List<String> secondaryCourses) {
+			this.secondaryCourses = secondaryCourses;
+		}
+
+        public String getCurriculum() {
+            return curriculum;
+        }
+
+        public void setCurriculum(String curriculum) {
+            this.curriculum = curriculum;
+        }
     }
 }
