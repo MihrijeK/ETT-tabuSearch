@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "n9EJ2iJSU7zIxf0L3NkRgyRTG0NMAUntEzY1uaB9XLNthT4p8ribITxaVchpT11FYJYxoDwI4vEVCO/E69r1sA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Mire\\source\\repos\\ETT\\ETT.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Mire\\.nuget\\packages\\dotliquid\\2.2.622\\dotliquid.2.2.622.nupkg.sha512",
+    "C:\\Users\\Mire\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\5.0.13\\microsoft.netcore.app.host.win-x64.5.0.13.nupkg.sha512"
+  ],
+  "logs": []
+}

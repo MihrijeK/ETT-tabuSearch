@@ -1,0 +1,16 @@
+C:\Users\Mire\source\repos\ETT\bin\Debug\net5.0\ETT.exe
+C:\Users\Mire\source\repos\ETT\bin\Debug\net5.0\ETT.deps.json
+C:\Users\Mire\source\repos\ETT\bin\Debug\net5.0\ETT.runtimeconfig.json
+C:\Users\Mire\source\repos\ETT\bin\Debug\net5.0\ETT.runtimeconfig.dev.json
+C:\Users\Mire\source\repos\ETT\bin\Debug\net5.0\ETT.dll
+C:\Users\Mire\source\repos\ETT\bin\Debug\net5.0\ref\ETT.dll
+C:\Users\Mire\source\repos\ETT\bin\Debug\net5.0\ETT.pdb
+C:\Users\Mire\source\repos\ETT\obj\Debug\net5.0\ETT.csproj.AssemblyReference.cache
+C:\Users\Mire\source\repos\ETT\obj\Debug\net5.0\ETT.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Mire\source\repos\ETT\obj\Debug\net5.0\ETT.AssemblyInfoInputs.cache
+C:\Users\Mire\source\repos\ETT\obj\Debug\net5.0\ETT.AssemblyInfo.cs
+C:\Users\Mire\source\repos\ETT\obj\Debug\net5.0\ETT.csproj.CoreCompileInputs.cache
+C:\Users\Mire\source\repos\ETT\obj\Debug\net5.0\ETT.dll
+C:\Users\Mire\source\repos\ETT\obj\Debug\net5.0\ref\ETT.dll
+C:\Users\Mire\source\repos\ETT\obj\Debug\net5.0\ETT.pdb
+C:\Users\Mire\source\repos\ETT\obj\Debug\net5.0\ETT.genruntimeconfig.cache
