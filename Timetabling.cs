@@ -175,49 +175,39 @@ namespace ETT
             return periodOfRoomSelected.isPresent() ? periodOfRoomSelected.get() : null;
         }
         
-        static void calculateCost(Solution solution, Instance inst) {
-            Map<String, List<String>> periodOfCourses = new HashMap<String, List<String>>();
-            solution.getAssignment().forEach(assignment -> {
-                List<Event> assignmentEvents = assignment.getEvents();
-                assignmentEvents.stream().forEach(event -> {
-                    if(periodOfCourses.containsKey(event.getPeriod())) {
-                        List<String> courses = periodOfCourses.get(event.getPeriod());
-                        if(!courses.contains(assignment.getCourse())) {
-                            courses.add(assignment.getCourse());
-                        }
-                    } else {
-                        periodOfCourses.put(event.getPeriod(), new ArrayList<>(Arrays.asList(assignment.getCourse())));
-                    }
-                });
-            });
-            
-            inst.getCurricula().stream().forEach(curricula -> {
-                List<String> curriculaCourses = curricula.getPrimaryCourses();
-                //Check second soft constraint 
-                checkSecondConstraintCost(solution, inst, curriculaCourses);
-                checkSecondConstraintCost(solution, inst, curricula.getSecondaryCourses());
-                curriculaCourses.addAll(curricula.getSecondaryCourses());
-                periodOfCourses.entrySet().stream().forEach(courses-> {
-                    if(!curriculaCourses.containsAll(courses.getValue())) {
-                        cost = cost + courses.getValue().size();
-                    }
-                });
-            });
-            solution.setCost(cost);
-            
-        }
+        public static void calculateCost(Solution solution, Instance inst)
+			{
+				Dictionary<String, List<String>> periodOfCourses = new Dictionary<string, List<string>>();
+				solution.getAssignment().ForEach(assignment =>
+												{ List<Event> assignmentEvents = assignment.getEvents();
+													//assignmentEvents.Where(x);
+												});
+												inst.getCurricula().ForEach(curricula => {
+													List<String> curriculaCourses = curricula.getPrimaryCourses();
+													checkSecondConstraintCost(solution, inst, curriculaCourses);
+													checkSecondConstraintCost(solution, inst, curricula.getSecondaryCourses());
+													curriculaCourses.Add(curricula.getSecondaryCourses().ToString());
+													periodOfCourses.Add(courses => if( !curriculaCourses.Contains(courses.getValue())
+																					{cost += courses.getValue())}));
+			});
 
-        static void checkSecondConstraintCost(Solution solution, Instance inst, List<String> curriculaCourses) {
-            List<Assignment> filteredAssignments = solution.getAssignment().stream().filter(a -> curriculaCourses.contains(a.getCourse())).collect(Collectors.toList());
-            Collections.sort(filteredAssignments, Comparator.comparing(a -> ((Assignment) a).getEvents().get(0).getPeriodDay()).reversed());
-            for (int i = 0; i < filteredAssignments.size()-1; i++) {
-                if(filteredAssignments.get(i).getEvents().get(0).getPeriodDay() + inst.getPrimaryPrimaryDistance().intValue() 
-                >=  filteredAssignments.get(i+1).getEvents().get(0).getPeriodDay()) {
-                    cost = cost + 1;
+		}
+        
+        public static void checkSecondConstraintCost(Solution solution, Instance inst, List<String> curriculaCourses) {
+            List<Assignment> filteredAssignments = solution.getAssignment().Where(a=> curriculaCourses.Contains(a.getCourse())).ToList();
+            //Collections.sort(filteredAssignments, Comparator.comparing(a -> ((Assignment) a).getEvents().get(0).getPeriodDay()).reversed());
+            //Sort(filteredAssignments, a => ((Assignment) a).getEvents[0].getPeriodDay());
+            for (int i = 0; i < filteredAssignments.Count - 1; i++)
+            {
+              if (filteredAssignments[i].getEvents()[0].getPeriodDay() + (int)inst.getPrimaryPrimaryDistance()
+                >= filteredAssignments[i + 1].getEvents()[0].getPeriodDay())
+                {
+                    Timetabling.cost += 1;
                 }
             }
-            
         }
+
+        
 
     }
 }
