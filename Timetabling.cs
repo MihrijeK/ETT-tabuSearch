@@ -6,7 +6,7 @@ namespace ETT
 {
     class Timetabling {
 	
-        private static IDictionary<Period, List<Room>> periodRoomRelation = new Dictionary<Period, List<Room>>();
+        private static Dictionary<Period, List<Room>> periodRoomRelation = new Dictionary<Period, List<Room>>();
         private static int cost = 0;
         private static Solution best = null;
         static void Main(string[] args){
@@ -123,72 +123,73 @@ namespace ETT
             return periodRooms;
         }
         
-        static Entry<Period, List<Room>> getRequestedCourseRooms(Course course, List<Exam> exams, Instance inst, Curricula curricula, BigDecimal distance, List<String> courses) {
+        static Dictionary<Period, List<Room>> getRequestedCourseRooms(Course course, List<Exam> exams, Instance inst, Curricula curricula, BigDecimal distance, List<String> courses) {
             List<Room> rooms = inst.getRooms().Where(room => room.getType().Equals(course.getRoomsRequested().getType()))
                     .limit(course.getRoomsRequested().getNumber()).toList();
-            Dictionary<Period, List<Room>> periodOfRooms = periodRoomRelation.entrySet().Where(e => CollectionUtils.containsAny(e.getValue(), rooms))
+            Dictionary<Period, List<Room>> periodOfRooms = periodRoomRelation.entrySet().Where(e => e.containsAny(e.getValue(), rooms))
                     .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
-            if(exams.isEmpty()) {
+            if(exams.Count == 0) {
                 return periodOfRooms.Count == 0 ? periodRoomRelation.entrySet().iterator().next() : periodOfRooms.entrySet().iterator().next();
             } else {
                 Dictionary<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.Count == 0 ? periodRoomRelation : periodOfRooms;
-                Entry<Period, List<Room>> softConstraintRoomPeriod = checkPeriodSoftConstraint(availablePeriodOfRooms, exams, curricula, course, courses, distance);
+                Dictionary<Period, List<Room>> softConstraintRoomPeriod = checkPeriodSoftConstraint(availablePeriodOfRooms, exams, curricula, course, courses, distance);
                 if(softConstraintRoomPeriod != null) {
                     return softConstraintRoomPeriod;
                 }
-                Entry<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().Where(
-                        e => exams.stream().anyMatch(ex -> !ex.getCourse().getTeacher().equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
+                Dictionary<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().Where(
+                        e => exams.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
                         .findFirst();
-                return periodOfRoomSelected.isPresent() ? periodOfRoomSelected.get() : null;
+                return periodOfRoomSelected != null ? periodOfRoomSelected : null;
             }
         }
         
-        static Entry<Period, List<Room>> checkPeriodSoftConstraint(IDictionary<Period, List<Room>> periodOfRooms, List<Exam> exams, Curricula curricula, 
+        static Dictionary<Period, List<Room>> checkPeriodSoftConstraint(Dictionary<Period, List<Room>> periodOfRooms, List<Exam> exams, Curricula curricula, 
                 Course course, List<String> courses, decimal distance) {
             List<String> allCurriculumCourses = new List<String>(curricula.getPrimaryCourses());
             allCurriculumCourses.AddRange(curricula.getSecondaryCourses());
             List<Exam> addedCurriculumCourses = exams.Where(exam => allCurriculumCourses.Contains(exam.getCourse().getCourse())).collect(Collectors.toList());
-            IDictionary<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.entrySet().Where(
-                    e => addedCurriculumCourses.stream().anyMatch(ex -> !ex.getCourse().getTeacher().equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
+            Dictionary<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.entrySet().Where(
+                    e => addedCurriculumCourses.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().Equals(e.getKey())))
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-            Entry<Period, List<Room>> periodOfRoom = checkCourseDistanceSoftConstraint(availablePeriodOfRooms, exams, courses, course, distance);
+            Dictionary<Period, List<Room>> periodOfRoom = checkCourseDistanceSoftConstraint(availablePeriodOfRooms, exams, courses, course, distance);
             if(periodOfRoom != null) {
                 return periodOfRoom;
             }
-            Entry<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().stream().filter(
-                    e -> addedCurriculumCourses.WhereAny(ex => !ex.getCourse().getTeacher().equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
+            Dictionary<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().Where(
+                    e => addedCurriculumCourses.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
                     .findFirst();
-            if(periodOfRoomSelected.isPresent()) {
-                return periodOfRoomSelected.get();
+            if(periodOfRoomSelected != null) {
+                return periodOfRoomSelected;
             }
             return null;
         }
         
-        static Entry<Period, List<Room>> checkCourseDistanceSoftConstraint(IDictionary<Period, List<Room>> periodOfRooms, List<Exam> exams, List<String> courses, Course course, decimal distance) {
+        static Dictionary<Period, List<Room>> checkCourseDistanceSoftConstraint(Dictionary<Period, List<Room>> periodOfRooms, List<Exam> exams, List<String> courses, Course course, decimal distance) {
             List<Exam> addedCourses = exams.Where(exam => courses.Contains(exam.getCourse().getCourse())).collect(Collectors.toList());
             Collections.sort(addedCourses, Comparator.comparing(o -> ((Exam) o).getPeriod().getDay()).reversed());
             if(addedCourses.Count == 0) {
                 return null;
             }
-            decimal lastAddedExamDayPeriod = new decimal (addedCourses.get(0).getPeriod().getDay());
-            Entry<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().stream().filter(e -> new BigDecimal(e.getKey().getDay()).compareTo(lastAddedExamDayPeriod.add(distance)) > 1 ).findFirst();
-            return periodOfRoomSelected.isPresent() ? periodOfRoomSelected.get() : null;
+            decimal lastAddedExamDayPeriod = addedCourses[0].getPeriod().getDay();
+            Dictionary<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().Where(e => e.getKey().getDay().compareTo(lastAddedExamDayPeriod.Add(distance)) > 1 ).findFirst();
+            return periodOfRoomSelected != null ? periodOfRoomSelected : null;
         }
         
         public static void calculateCost(Solution solution, Instance inst)
 			{
 				Dictionary<String, List<String>> periodOfCourses = new Dictionary<string, List<string>>();
 				solution.getAssignment().ForEach(assignment =>
-												{ List<Event> assignmentEvents = assignment.getEvents();
+				{ List<Event> assignmentEvents = assignment.getEvents();
 													//assignmentEvents.Where(x);
-												});
-												inst.getCurricula().ForEach(curricula => {
-													List<String> curriculaCourses = curricula.getPrimaryCourses();
-													checkSecondConstraintCost(solution, inst, curriculaCourses);
-													checkSecondConstraintCost(solution, inst, curricula.getSecondaryCourses());
-													curriculaCourses.Add(curricula.getSecondaryCourses().ToString());
-													periodOfCourses.Add(courses => if( !curriculaCourses.Contains(courses.getValue())
-																					{cost += courses.getValue())}));
+				});
+				
+                inst.getCurricula().ForEach(curricula => {
+					List<String> curriculaCourses = curricula.getPrimaryCourses();
+					checkSecondConstraintCost(solution, inst, curriculaCourses);
+					checkSecondConstraintCost(solution, inst, curricula.getSecondaryCourses());
+					curriculaCourses.Add(curricula.getSecondaryCourses().ToString());
+					periodOfCourses.Add(courses => if( !curriculaCourses.Contains(courses.getValue())
+					{cost += courses.getValue())}));
 			});
 
 		}

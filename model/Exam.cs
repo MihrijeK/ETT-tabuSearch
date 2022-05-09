@@ -43,5 +43,11 @@ namespace ETT.model
             this.curriculum = curriculum;
         }
 
+        public Period getPeriod() {
+		return period;
+        }
+        public void setPeriod(Period period) {
+            this.period = period;
+        }
     }
 }

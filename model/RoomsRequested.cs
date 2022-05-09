@@ -17,7 +17,12 @@ namespace ETT.model
             this.number = number;
             this.type = type;
         }
-
+        public int getNumber() {
+            return number;
+        }
+        public void setNumber(int number) {
+            this.number = number;
+        }
         public RoomType getType() {
             return type;
         }

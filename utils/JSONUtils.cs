@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+
 public class JSONUtils {
 
 	public static <T> T convert(String json, TypeReference<T> typeReference) {
@@ -25,25 +27,27 @@ public class JSONUtils {
 		return "";
 	}
 
-	public static string getFileData(String fileName) throws ParseException {
+	public static string getFileData(String fileName){
+
         JSONParser jsonParser = new JSONParser();
-        try (FileReader reader = new FileReader(fileName))
-        {
-            return jsonParser.parse(reader).toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+		StreamReader reader = File.OpenText(fileName);
+
+        // {
+        return jsonParser.parse(reader).toString();
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+        // return null;
 	}
 	
 	public static void saveFile(String object, String fileName) {
-		try (FileWriter file = new FileWriter(fileName)) {
+		try (StreamReader file = File.OpenText(fileName)) {
             file.write(object);
-            System.out.println("Successfully Copied JSON Object to File...");
+            Console.WriteLine("Successfully Copied JSON Object to File...");
             file.flush();
             file.close();
         } catch(Exception e){
-            System.out.println(e);
+            Console.WriteLine(e);
         }
 	}
 }

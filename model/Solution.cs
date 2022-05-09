@@ -11,9 +11,13 @@ namespace ETT.model
         private Random randomGenerator { get; set; }
         private List<Assignment> assignments { get; set; }
         private int cost { get; set; }
+        public List<Assignment> getAssignment() {
+		return assignments;
+	}
+
         public void setAssignment(List<Assignment> assignments) {
-		    this.assignments = assignments;
-	    }
+            this.assignments = assignments;
+        }
         public Solution(List<Assignment> assignments, int set)
         {
             this.assignments = assignments;
