@@ -30,6 +30,14 @@ namespace ETT.model
         public void setRoom(String room) {
 		    this.room = room;
 	    }
+
+        public int getPeriodDay() {
+		    return periodDay;
+        }
+
+        public void setPeriodDay(int periodDay) {
+            this.periodDay = periodDay;
+        }
         public Event() { }
         public Event(string period, int periodDay, int periodTimeslot, string room)
         {

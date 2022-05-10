@@ -12,9 +12,11 @@ namespace ETT.model
         private List<Assignment> assignments { get; set; }
         private int cost { get; set; }
         public List<Assignment> getAssignment() {
-		return assignments;
-	}
+            return assignments;
+        }
 
+        public Solution(){
+        }
         public void setAssignment(List<Assignment> assignments) {
             this.assignments = assignments;
         }

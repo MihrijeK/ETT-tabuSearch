@@ -79,7 +79,7 @@ namespace ETT
             var shuffleCurriculumCourses = curricumCourses.OrderBy(a => randomGenerator.Next()).ToList();
             foreach (String prCourse in shuffleCurriculumCourses) {
                 Course course = courses.Where(cr => cr.getCourse().Equals(prCourse, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-                Entry<Period, List<Room>> periodAndCourseRoom = getRequestedCourseRooms(course.get(), exams, inst, curricula, distance ,curricumCourses);
+                Dictionary<Period, List<Room>> periodAndCourseRoom = getRequestedCourseRooms(course.get(), exams, inst, curricula, distance ,curricumCourses);
                 if(periodAndCourseRoom != null) {
                       List<Room> selectedPeriod = periodAndCourseRoom.getValue().Where(r => r.getType().equals(course.get().getRoomsRequested().getType())).limit(course.get().getRoomsRequested().getNumber()).toList();
                         Exam exam = new Exam.Builder().course(course.get()).rooms(selectedPeriod)
@@ -175,40 +175,49 @@ namespace ETT
             return periodOfRoomSelected != null ? periodOfRoomSelected : null;
         }
         
-        public static void calculateCost(Solution solution, Instance inst)
-			{
-				Dictionary<String, List<String>> periodOfCourses = new Dictionary<string, List<string>>();
-				solution.getAssignment().ForEach(assignment =>
-				{ List<Event> assignmentEvents = assignment.getEvents();
-													//assignmentEvents.Where(x);
-				});
-				
-                inst.getCurricula().ForEach(curricula => {
-					List<String> curriculaCourses = curricula.getPrimaryCourses();
-					checkSecondConstraintCost(solution, inst, curriculaCourses);
-					checkSecondConstraintCost(solution, inst, curricula.getSecondaryCourses());
-					curriculaCourses.Add(curricula.getSecondaryCourses().ToString());
-					periodOfCourses.Add(courses => if( !curriculaCourses.Contains(courses.getValue())
-					{cost += courses.getValue())}));
+        static void calculateCost(Solution solution, Instance inst) {
+            Dictionary<String, List<String>> periodOfCourses = new Dictionary<String, List<String>>();
+            solution.getAssignment().ForEach(assignment => {
+			List<Event> assignmentEvents = assignment.getEvents();
+			assignmentEvents.ForEach(e => {
+				if(periodOfCourses.ContainsKey(e.getPeriod())) {
+					List<String> courses = periodOfCourses[e.getPeriod()];
+					if(!courses.Contains(assignment.getCourse())) {
+						courses.Add(assignment.getCourse());
+					}
+				} else {
+					periodOfCourses.Add(e.getPeriod(), new ArrayList<>(Arrays.asList(assignment.getCourse())));
+				}
 			});
+		});
+		
+		inst.getCurricula().ForEach(curricula => {
+			List<String> curriculaCourses = curricula.getPrimaryCourses();
+			//Check second soft constraint 
+			checkSecondConstraintCost(solution, inst, curriculaCourses);
+			checkSecondConstraintCost(solution, inst, curricula.getSecondaryCourses());
+			curriculaCourses.AddRange(curricula.getSecondaryCourses());
+			periodOfCourses.AsParallel().ForAll(courses => {
+				if(!curriculaCourses.Contains(courses)) {  ////////////////////////////////////////
+					cost = cost + courses.Value.Count;
+				}
+			});
+		});
+		solution.setCost(cost);
+		
+	}
 
+	static void checkSecondConstraintCost(Solution solution, Instance inst, List<String> curriculaCourses) {
+		List<Assignment> filteredAssignments = new List<Assignment>();
+        filteredAssignments = solution.getAssignment().Where(a => curriculaCourses.Contains(a.getCourse())).toList();
+		Collections.sort(filteredAssignments, Comparator.comparing(a -> ((Assignment) a).getEvents().get(0).getPeriodDay()).reversed());
+		for (int i = 0; i < filteredAssignments.Count-1; i++) {
+			if(filteredAssignments[i].getEvents()[0].getPeriodDay() + inst.getPrimaryPrimaryDistance().intValue() 
+			>=  filteredAssignments[i+1].getEvents()[0].getPeriodDay()) {
+				cost = cost + 1;
+			}
 		}
-        
-        public static void checkSecondConstraintCost(Solution solution, Instance inst, List<String> curriculaCourses) {
-            List<Assignment> filteredAssignments = solution.getAssignment().Where(a=> curriculaCourses.Contains(a.getCourse())).ToList();
-            //Collections.sort(filteredAssignments, Comparator.comparing(a -> ((Assignment) a).getEvents().get(0).getPeriodDay()).reversed());
-            //Sort(filteredAssignments, a => ((Assignment) a).getEvents[0].getPeriodDay());
-            for (int i = 0; i < filteredAssignments.Count - 1; i++)
-            {
-              if (filteredAssignments[i].getEvents()[0].getPeriodDay() + (int)inst.getPrimaryPrimaryDistance()
-                >= filteredAssignments[i + 1].getEvents()[0].getPeriodDay())
-                {
-                    Timetabling.cost += 1;
-                }
-            }
-        }
-
-        
+	}
 
     }
 }

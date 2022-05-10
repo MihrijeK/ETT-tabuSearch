@@ -17,6 +17,13 @@ namespace ETT.model
         public void setEvents(List<Event> events) {
 		    this.events = events;
 	    }
+
+        public String getCourse() {
+            return course;
+        }
+        public void setCourse(String course) {
+            this.course = course;
+        }
         public Assignment() { }
         public Assignment(string course, List<Event> events)
         {
