@@ -31,12 +31,12 @@ namespace ETT
                     tabuList.RemoveAt(0);
                 }
                 cost = 0;
-                R = new Solution.Builder().assignments(applyTweaks(solution, inst)).cost(cost).build();
+                R = new Solution.Builder().assignmentss(applyTweaks(solution, inst)).costs(cost).build();
                 calculateCost(R, inst);
                 Console.WriteLine(R.getCost());
                 for (int i = 0; i < numberOfTweak; i++) {
                     cost = 0;
-                    Solution W = new Solution.Builder().assignments(applyTweaks(solution, inst)).cost(cost).build();
+                    Solution W = new Solution.Builder().assignmentss(applyTweaks(solution, inst)).costs(cost).build();
                     calculateCost(W, inst);
                     Console.WriteLine(W.getCost());
                     if(!tabuList.Contains(W) && (W.getCost() > R.getCost() || tabuList.Contains(R))) {
@@ -64,7 +64,7 @@ namespace ETT
                 checkingConstraints(inst, courses, exams, curricula, curricula.getPrimaryCourses(), assignments, inst.getPrimaryPrimaryDistance());
                 checkingConstraints(inst, courses, exams, curricula, curricula.getSecondaryCourses(), assignments, inst.getPrimarySecondaryDistance());
 		    });
-            return new Solution.Builder().assignments(assignments).cost(cost).build();
+            return new Solution.Builder().assignmentss(assignments).costs(cost).build();
         }
         
         private static List<Assignment> applyTweaks(Solution solution, Instance inst) {

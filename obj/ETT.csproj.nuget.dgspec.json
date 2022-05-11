@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj": {
+    "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
         "projectName": "ETT",
-        "projectPath": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -37,6 +37,20 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.1, )"
+            },
+            "Json.Net": {
+              "target": "Package",
+              "version": "[1.0.33, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

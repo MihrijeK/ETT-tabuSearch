@@ -50,4 +50,5 @@ namespace ETT.model
             this.period = period;
         }
     }
+    
 }
