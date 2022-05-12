@@ -32,13 +32,7 @@ namespace ETT.model
         public void setCost(int cost) {
             this.cost = cost;
         } 
-
-        // public List<Assignment> assignmentss(List<Assignment> assignments) {
-		// 	this.assignments = assignments;
-		// 	return this.assignments;
-		// }
-
-	
+        
         public class Builder {
             private List<Assignment> assignments;
             private int cost;

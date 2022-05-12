@@ -46,5 +46,39 @@ namespace ETT.model
             this.periodDay = periodDay;
             this.periodTimeslot = periodTimeslot;
         }
+    public class Builder {
+            private string period;
+            //@JsonIgnore per mos me u gjeneru ne Json garant
+            private int periodDay;
+            //@JsonIgnore
+            private int periodTimeslot;
+            private string room;
+            
+            public Builder periodss(string period) {
+                this.period = period;
+                return this;
+            }
+            
+            public Builder periodDays(int periodDay) {
+                this.periodDay = periodDay;
+                return this;
+            }
+
+            public Builder perTimeslots(int periodTimeslot) {
+                this.periodTimeslot = periodTimeslot;
+                return this;
+            }
+
+            public Builder rooms(string room) {
+                this.room = room;
+                return this;
+            }
+            
+            
+            public Event build() {
+                return new Event();
+            }
+        }
+        
     }
 }

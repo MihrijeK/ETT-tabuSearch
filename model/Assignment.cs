@@ -18,6 +18,7 @@ namespace ETT.model
 		    this.events = events;
 	    }
 
+
         public String getCourse() {
             return course;
         }
@@ -31,5 +32,23 @@ namespace ETT.model
             this.events = events;
         }
 
+    public class Builder {
+            private string course;
+            private List<Event> events;
+            
+            public Builder courses(string course) {
+                this.course = course;
+                return this;
+            }
+            
+            public Builder eventss(List<Event> events) {
+                this.events = events;
+                return this;
+            }
+            
+            public Assignment build() {
+                return new Assignment();
+            }
+        }
     }
 }

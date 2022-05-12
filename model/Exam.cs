@@ -49,6 +49,38 @@ namespace ETT.model
         public void setPeriod(Period period) {
             this.period = period;
         }
-    }
     
+    public class Builder {
+            private int cost;
+
+            private Course course;
+            private List<Room> rooms;
+            private Period period;
+            private string curriculum;
+            
+            public Builder courses(Course course) {
+                this.course = course;
+                return this;
+            }
+            
+            public Builder roomss(List<Room> rooms) {
+                this.rooms = rooms;
+                return this;
+            }
+            
+            public Builder periods(Period period) {
+                this.period = period;
+                return this;
+
+            }
+
+            public Builder currilculums(string curriculum) {
+                this.curriculum = curriculum;
+                return this;
+            }
+            public Exam build() {
+                return new Exam();
+            }
+        }
+    }
 }

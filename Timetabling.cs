@@ -79,27 +79,27 @@ namespace ETT
             var shuffleCurriculumCourses = curricumCourses.OrderBy(a => randomGenerator.Next()).ToList();
             foreach (String prCourse in shuffleCurriculumCourses) {
                 Course course = courses.Where(cr => cr.getCourse().Equals(prCourse, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-                Dictionary<Period, List<Room>> periodAndCourseRoom = getRequestedCourseRooms(course.get(), exams, inst, curricula, distance ,curricumCourses);
+                Dictionary<Period, List<Room>> periodAndCourseRoom = getRequestedCourseRooms(course, exams, inst, curricula, distance ,curricumCourses);
                 if(periodAndCourseRoom != null) {
-                      List<Room> selectedPeriod = periodAndCourseRoom.getValue().Where(r => r.getType().equals(course.get().getRoomsRequested().getType())).limit(course.get().getRoomsRequested().getNumber()).toList();
-                        Exam exam = new Exam.Builder().course(course.get()).rooms(selectedPeriod)
-                                .period(periodAndCourseRoom.getKey()).curriculum(curricula.getCurriculum()).build();
+                      List<Room> selectedPeriod = periodAndCourseRoom.Where(r => r.Equals(course.getRoomsRequested().getType())).limit(course.getRoomsRequested().getNumber()).ToList();
+                        Exam exam = new Exam.Builder().courses(course).roomss(selectedPeriod)
+                                .periods(periodAndCourseRoom.getKey()).curriculum(curricula.getCurriculum()).build();
                         exams.Add(exam);
                         List<Event> events = new List<Event>();
-                        // if(selectedPeriod.Count == 0) {
-                        //     Event event = new Event.Builder().period(periodAndCourseRoom.getKey().getId()).periodDay(periodAndCourseRoom.getKey().getDay()).
-                        //             periodTimeslot(periodAndCourseRoom.getKey().getTimeslot()).room("").build();
-                        //     events.Add(event);
-                        // } 
-                        // else {
-                        //     selectedPeriod.ForEach(period => {
-                        //         Event event = new Event.Builder().period(periodAndCourseRoom.getKey().getId()).periodDay(periodAndCourseRoom.getKey().getDay()).
-                        //                 periodTimeslot(periodAndCourseRoom.getKey().getTimeslot()).room(period.getRoom()).build();
-                        //         events.Add(event);
-                        //     });
-                        // }
-                        Assignment assignment = new Assignment.Builder().course(exam.getCourse().getCourse())
-                                .events(events).build();
+                        if(selectedPeriod.Count == 0) {
+                            Event e = new Event.Builder().periodss(periodAndCourseRoom.getKey().getId()).periodDays(periodAndCourseRoom.getKey().getDay()).
+                                    periodTimeslots(periodAndCourseRoom.getKey().getTimeslot()).rooms("").build();
+                            events.Add(e);
+                        } 
+                        else {
+                            selectedPeriod.ForEach(period => {
+                                Event e = new Event.Builder().periodss(periodAndCourseRoom.getKey().getId()).periodDays(periodAndCourseRoom.getKey().getDay()).
+                                        periodTimeslots(periodAndCourseRoom.getKey().getTimeslot()).rooms(period.getRoom()).build();
+                                events.Add(e);
+                            });
+                        }
+                        Assignment assignment = new Assignment.Builder().courses(exam.getCourse().getCourse())
+                                .eventss(events).build();
                         assignments.Add(assignment);
                         periodRoomRelation.Remove(periodAndCourseRoom.getKey());
                 }
@@ -115,7 +115,7 @@ namespace ETT
             int id = 0;
             for (int i = 1; i <= day/timeslots; i++) {
                 for (int j = 1; j <= timeslots; j++) {
-                    Period period = new Period.Builder().id(Convert.ToString(id)).day(i).timeslot(j).build();
+                    Period period = new Period.Builder().ids(Convert.ToString(id)).days(i).timeslots(j).build();
                     periodRooms.Add(period, rooms);
                     id++;
                 }
@@ -123,10 +123,10 @@ namespace ETT
             return periodRooms;
         }
         
-        static Dictionary<Period, List<Room>> getRequestedCourseRooms(Course course, List<Exam> exams, Instance inst, Curricula curricula, BigDecimal distance, List<String> courses) {
+        static Dictionary<Period, List<Room>> getRequestedCourseRooms(Course course, List<Exam> exams, Instance inst, Curricula curricula, decimal distance, List<String> courses) {
             List<Room> rooms = inst.getRooms().Where(room => room.getType().Equals(course.getRoomsRequested().getType()))
                     .limit(course.getRoomsRequested().getNumber()).toList();
-            Dictionary<Period, List<Room>> periodOfRooms = periodRoomRelation.entrySet().Where(e => e.containsAny(e.getValue(), rooms))
+            Dictionary<Period, List<Room>> periodOfRooms = periodRoomRelation.entrySet().Where(e => e.ContainsAny(e.getValue(), rooms))
                     .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
             if(exams.Count == 0) {
                 return periodOfRooms.Count == 0 ? periodRoomRelation.entrySet().iterator().next() : periodOfRooms.entrySet().iterator().next();
@@ -147,16 +147,15 @@ namespace ETT
                 Course course, List<String> courses, decimal distance) {
             List<String> allCurriculumCourses = new List<String>(curricula.getPrimaryCourses());
             allCurriculumCourses.AddRange(curricula.getSecondaryCourses());
-            List<Exam> addedCurriculumCourses = exams.Where(exam => allCurriculumCourses.Contains(exam.getCourse().getCourse())).collect(Collectors.toList());
+            List<Exam> addedCurriculumCourses = exams.Where(exam => allCurriculumCourses.Contains(exam.getCourse().getCourse())).ToList();
             Dictionary<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.entrySet().Where(
-                    e => addedCurriculumCourses.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().Equals(e.getKey())))
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                    e => addedCurriculumCourses.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().Equals(e.getKey())));
             Dictionary<Period, List<Room>> periodOfRoom = checkCourseDistanceSoftConstraint(availablePeriodOfRooms, exams, courses, course, distance);
             if(periodOfRoom != null) {
                 return periodOfRoom;
             }
             Dictionary<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().Where(
-                    e => addedCurriculumCourses.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
+                    e => addedCurriculumCourses.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().Equals(e.getKey())))
                     .findFirst();
             if(periodOfRoomSelected != null) {
                 return periodOfRoomSelected;
@@ -165,13 +164,13 @@ namespace ETT
         }
         
         static Dictionary<Period, List<Room>> checkCourseDistanceSoftConstraint(Dictionary<Period, List<Room>> periodOfRooms, List<Exam> exams, List<String> courses, Course course, decimal distance) {
-            List<Exam> addedCourses = exams.Where(exam => courses.Contains(exam.getCourse().getCourse())).collect(Collectors.toList());
-            Collections.sort(addedCourses, Comparator.comparing(o -> ((Exam) o).getPeriod().getDay()).reversed());
+            List<Exam> addedCourses = exams.Where(exam => courses.Contains(exam.getCourse().getCourse())).ToList();
+            addedCourses.Sort(addedCourses.CompareTo(new Exam.getPeriod().getDay()).reversed());
             if(addedCourses.Count == 0) {
                 return null;
             }
             decimal lastAddedExamDayPeriod = addedCourses[0].getPeriod().getDay();
-            Dictionary<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().Where(e => e.getKey().getDay().compareTo(lastAddedExamDayPeriod.Add(distance)) > 1 ).findFirst();
+            Dictionary<Period, List<Room>> periodOfRoomSelected = periodOfRooms.AsParallel().Where(e => e.Key.getDay().CompareTo(lastAddedExamDayPeriod+distance) > 1 ).FindFirst();
             return periodOfRoomSelected != null ? periodOfRoomSelected : null;
         }
         
@@ -198,7 +197,7 @@ namespace ETT
 			checkSecondConstraintCost(solution, inst, curricula.getSecondaryCourses());
 			curriculaCourses.AddRange(curricula.getSecondaryCourses());
 			periodOfCourses.AsParallel().ForAll(courses => {
-				if(!curriculaCourses.Contains(courses)) {  ////////////////////////////////////////
+				if(!curriculaCourses.Contains(courses.Key)) {  ////////////////////////////////////////
 					cost = cost + courses.Value.Count;
 				}
 			});
@@ -209,10 +208,10 @@ namespace ETT
 
 	static void checkSecondConstraintCost(Solution solution, Instance inst, List<String> curriculaCourses) {
 		List<Assignment> filteredAssignments = new List<Assignment>();
-        filteredAssignments = solution.getAssignment().Where(a => curriculaCourses.Contains(a.getCourse())).toList();
-		Collections.sort(filteredAssignments, Comparator.comparing(a -> ((Assignment) a).getEvents().get(0).getPeriodDay()).reversed());
+        filteredAssignments = solution.getAssignment().Where(a => curriculaCourses.Contains(a.getCourse())).ToList();
+		filteredAssignments.Sort(filteredAssignments.CompareTo((new Assignment.getEvents()[0].getPeriodDay())).reversed());
 		for (int i = 0; i < filteredAssignments.Count-1; i++) {
-			if(filteredAssignments[i].getEvents()[0].getPeriodDay() + inst.getPrimaryPrimaryDistance().intValue() 
+			if(filteredAssignments[i].getEvents()[0].getPeriodDay() + ((int)inst.getPrimaryPrimaryDistance())
 			>=  filteredAssignments[i+1].getEvents()[0].getPeriodDay()) {
 				cost = cost + 1;
 			}
