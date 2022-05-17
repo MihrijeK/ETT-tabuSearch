@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETT.model
 {
-    class Period
+    public class Period
     {
         private string id { get; set; }
         private int day { get; set; }

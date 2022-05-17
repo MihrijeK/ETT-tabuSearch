@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj": {}
+    "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj": {
+    "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
+        "projectUniqueName": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
         "projectName": "ETT",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
+        "projectPath": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\obj\\",
+        "outputPath": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"

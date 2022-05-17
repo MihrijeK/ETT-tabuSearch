@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETT.model
 {
-    class Assignment
+    public class Assignment
     {
         private string course { get; set; }
         private List<Event> events { get; set; }

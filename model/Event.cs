@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETT.model
 {
-    class Event
+    public class Event
     {
         private string period { get; set; }
         //@JsonIgnore per mos me u gjeneru ne Json garant

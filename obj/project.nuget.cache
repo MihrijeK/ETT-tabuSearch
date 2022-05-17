@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "abxN5ZWoYvAWjufJdu0l8OMrUDY4YlkI76Uo1u/UlTlJzbi7hxHkXII5IsIyFGQzIqt8OgcQZNa4g56cbsuXmQ==",
+  "dgSpecHash": "UBfR151hKCInGT2ekiO20Sv8rnUjg1EmjaddCWvXOYzdH0FMJ32LwuUke1sgYYnk+kjNuJBz265tCgRriUpA4Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
+  "projectFilePath": "c:\\Users\\Admin\\Desktop\\Master\\Semestri i dyte\\Uebi Semantik\\ETT-tabuSearch\\ETT.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\json.net\\1.0.33\\json.net.1.0.33.nupkg.sha512",

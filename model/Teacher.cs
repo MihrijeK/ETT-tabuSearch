@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETT.model
 {
-    class Teacher
+    public class Teacher
     {
 		private string id { get; set; }
 		private string name { get; set; }

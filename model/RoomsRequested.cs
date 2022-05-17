@@ -7,7 +7,7 @@ using static ETT.model.Room;
 
 namespace ETT.model
 {
-    class RoomsRequested
+    public class RoomsRequested
     {
         private int number { get; set; }
         private RoomType type { get; set; }

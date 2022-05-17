@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETT.model
 {
-    class Solution
+    public class Solution
     {
         private Random randomGenerator { get; set; }
         private List<Assignment> assignments { get; set; }

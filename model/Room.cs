@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ETT.model
 {
-    class Room
+    public class Room
     {
         public enum RoomType
         {

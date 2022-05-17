@@ -11,7 +11,7 @@ namespace ETT
         private static Solution best = null;
         static void Main(string[] args){
 
-            Instance inst = JSONUtils.convert(JSONUtils.getFileData("src/main/java/com/timetabling/app/D1-2-16.json"), new TypeReference<Instance>(){});
+            Instance inst = JSONUtils.Convert(JSONUtils.getFileData("src/main/java/com/timetabling/app/D1-2-16.json"), new Instance(){});
 
             List<Course> courses = inst.getCourses();
             List<Room> rooms = inst.getRooms();
@@ -73,15 +73,14 @@ namespace ETT
         }
 
         static List<Assignment> checkingConstraints(Instance inst, List<Course> courses, List<Exam> exams, Curricula curricula,
-                List<String> curricumCourses, List<Assignment> assignments, decimal distance) {
-            // // Collections.shuffle(curricumCourses);
+            List<String> curricumCourses, List<Assignment> assignments, decimal distance) {
             Random randomGenerator = new Random();
             var shuffleCurriculumCourses = curricumCourses.OrderBy(a => randomGenerator.Next()).ToList();
             foreach (String prCourse in shuffleCurriculumCourses) {
                 Course course = courses.Where(cr => cr.getCourse().Equals(prCourse, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
                 Dictionary<Period, List<Room>> periodAndCourseRoom = getRequestedCourseRooms(course, exams, inst, curricula, distance ,curricumCourses);
                 if(periodAndCourseRoom != null) {
-                      List<Room> selectedPeriod = periodAndCourseRoom.Where(r => r.Equals(course.getRoomsRequested().getType())).limit(course.getRoomsRequested().getNumber()).ToList();
+                      List<Room> selectedPeriod = periodAndCourseRoom.Where(r => r.Equals(course.getRoomsRequested().getType())).Take(course.getRoomsRequested().getNumber()).ToList();
                         Exam exam = new Exam.Builder().courses(course).roomss(selectedPeriod)
                                 .periods(periodAndCourseRoom.getKey()).curriculum(curricula.getCurriculum()).build();
                         exams.Add(exam);
@@ -125,20 +124,21 @@ namespace ETT
         
         static Dictionary<Period, List<Room>> getRequestedCourseRooms(Course course, List<Exam> exams, Instance inst, Curricula curricula, decimal distance, List<String> courses) {
             List<Room> rooms = inst.getRooms().Where(room => room.getType().Equals(course.getRoomsRequested().getType()))
-                    .limit(course.getRoomsRequested().getNumber()).toList();
-            Dictionary<Period, List<Room>> periodOfRooms = periodRoomRelation.entrySet().Where(e => e.ContainsAny(e.getValue(), rooms))
-                    .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue()));
+                    .Take(course.getRoomsRequested().getNumber()).ToList();
+            Dictionary<Period, List<Room>> periodOfRooms = periodRoomRelation.AsParallel().Where(e => e.Equals(rooms))
+                    .ToDictionary(e => e.Key, e => e.Value);
             if(exams.Count == 0) {
-                return periodOfRooms.Count == 0 ? periodRoomRelation.entrySet().iterator().next() : periodOfRooms.entrySet().iterator().next();
+                return periodOfRooms.Count == 0 ? periodRoomRelation.AsParallel().ForAll()
+                .iterator().next() : periodOfRooms.AsParallel().iterator().next();
             } else {
                 Dictionary<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.Count == 0 ? periodRoomRelation : periodOfRooms;
                 Dictionary<Period, List<Room>> softConstraintRoomPeriod = checkPeriodSoftConstraint(availablePeriodOfRooms, exams, curricula, course, courses, distance);
                 if(softConstraintRoomPeriod != null) {
                     return softConstraintRoomPeriod;
                 }
-                Dictionary<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().Where(
-                        e => exams.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().equals(e.getKey())))
-                        .findFirst();
+                Dictionary<Period, List<Room>> periodOfRoomSelected = periodOfRooms.Where(
+                        e => exams.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().Equals(e.Key)))
+                        .SingleOrDefault();
                 return periodOfRoomSelected != null ? periodOfRoomSelected : null;
             }
         }
