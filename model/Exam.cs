@@ -27,6 +27,10 @@ namespace ETT.model
 	    public void setRooms(List<Room> rooms) {
 		    this.rooms = rooms;
 	    }
+        public Period getPeriod() {
+            return period;
+        }
+
 
         public Course getCourse() {
 		    return course;
@@ -43,9 +47,6 @@ namespace ETT.model
             this.curriculum = curriculum;
         }
 
-        public Period getPeriod() {
-		return period;
-        }
         public void setPeriod(Period period) {
             this.period = period;
         }

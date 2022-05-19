@@ -128,8 +128,7 @@ namespace ETT
             Dictionary<Period, List<Room>> periodOfRooms = periodRoomRelation.AsParallel().Where(e => e.Equals(rooms))
                     .ToDictionary(e => e.Key, e => e.Value);
             if(exams.Count == 0) {
-                return periodOfRooms.Count == 0 ? periodRoomRelation.AsParallel().ForAll()
-                .iterator().next() : periodOfRooms.AsParallel().iterator().next();
+                return periodOfRooms.Count == 0 ? periodRoomRelation.Value : periodOfRooms.AsParallel().iterator().next();
             } else {
                 Dictionary<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.Count == 0 ? periodRoomRelation : periodOfRooms;
                 Dictionary<Period, List<Room>> softConstraintRoomPeriod = checkPeriodSoftConstraint(availablePeriodOfRooms, exams, curricula, course, courses, distance);
@@ -148,15 +147,15 @@ namespace ETT
             List<String> allCurriculumCourses = new List<String>(curricula.getPrimaryCourses());
             allCurriculumCourses.AddRange(curricula.getSecondaryCourses());
             List<Exam> addedCurriculumCourses = exams.Where(exam => allCurriculumCourses.Contains(exam.getCourse().getCourse())).ToList();
-            Dictionary<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.entrySet().Where(
-                    e => addedCurriculumCourses.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().Equals(e.getKey())));
+            Dictionary<Period, List<Room>> availablePeriodOfRooms = periodOfRooms.AsParallel().Where(
+                    e => addedCurriculumCourses.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().Equals(e.Key))).ToDictionary(ex => ex.Key, ex => ex.Value);
             Dictionary<Period, List<Room>> periodOfRoom = checkCourseDistanceSoftConstraint(availablePeriodOfRooms, exams, courses, course, distance);
             if(periodOfRoom != null) {
                 return periodOfRoom;
             }
-            Dictionary<Period, List<Room>> periodOfRoomSelected = periodOfRooms.entrySet().Where(
-                    e => addedCurriculumCourses.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().Equals(e.getKey())))
-                    .findFirst();
+            Dictionary<Period, List<Room>> periodOfRoomSelected = periodOfRooms.AsParallel().Where(
+                    e => addedCurriculumCourses.Any(ex => !ex.getCourse().getTeacher().Equals(course.getTeacher()) && !ex.getPeriod().Equals(e.Key)))
+                    .FirstOrDefault();
             if(periodOfRoomSelected != null) {
                 return periodOfRoomSelected;
             }
@@ -185,7 +184,7 @@ namespace ETT
 						courses.Add(assignment.getCourse());
 					}
 				} else {
-					periodOfCourses.Add(e.getPeriod(), new ArrayList<>(Arrays.asList(assignment.getCourse())));
+					periodOfCourses.Add(e.getPeriod(), new List<String>(assignment.getCourse().ToList()));
 				}
 			});
 		});
@@ -209,7 +208,7 @@ namespace ETT
 	static void checkSecondConstraintCost(Solution solution, Instance inst, List<String> curriculaCourses) {
 		List<Assignment> filteredAssignments = new List<Assignment>();
         filteredAssignments = solution.getAssignment().Where(a => curriculaCourses.Contains(a.getCourse())).ToList();
-		filteredAssignments.Sort(filteredAssignments.CompareTo((new Assignment.getEvents()[0].getPeriodDay())).reversed());
+        // filteredAssignments.Sort(filteredAssignments.CompareTo((new Assignment.getEvents()[0].getPeriodDay())).reversed());
 		for (int i = 0; i < filteredAssignments.Count-1; i++) {
 			if(filteredAssignments[i].getEvents()[0].getPeriodDay() + ((int)inst.getPrimaryPrimaryDistance())
 			>=  filteredAssignments[i+1].getEvents()[0].getPeriodDay()) {
