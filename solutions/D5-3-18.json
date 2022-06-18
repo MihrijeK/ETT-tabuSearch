@@ -1,0 +1,650 @@
+{
+  "Assignments": [
+    {
+      "Course": "38900",
+      "Period": 16,
+      "Room": "3264"
+    },
+    {
+      "Course": "38936",
+      "Period": 8,
+      "Room": "3262"
+    },
+    {
+      "Course": "38938",
+      "Period": 19,
+      "Room": "3264"
+    },
+    {
+      "Course": "38940",
+      "Period": 18,
+      "Room": "3264"
+    },
+    {
+      "Course": "38941",
+      "Period": 20,
+      "Room": "3256"
+    },
+    {
+      "Course": "38942",
+      "Period": 20,
+      "Room": "3247"
+    },
+    {
+      "Course": "38943",
+      "Period": 5,
+      "Room": "3256"
+    },
+    {
+      "Course": "38944",
+      "Period": 5,
+      "Room": "3250, 3261"
+    },
+    {
+      "Course": "38946",
+      "Period": 4,
+      "Room": "3248"
+    },
+    {
+      "Course": "38947",
+      "Period": 16,
+      "Room": "3262"
+    },
+    {
+      "Course": "38952",
+      "Period": 17,
+      "Room": "3248"
+    },
+    {
+      "Course": "38953",
+      "Period": 18,
+      "Room": "3249"
+    },
+    {
+      "Course": "38954",
+      "Period": 1,
+      "Room": "3256"
+    },
+    {
+      "Course": "38955",
+      "Period": 3,
+      "Room": "3264"
+    },
+    {
+      "Course": "38956",
+      "Period": 5,
+      "Room": "3248"
+    },
+    {
+      "Course": "38957",
+      "Period": 4,
+      "Room": "3262"
+    },
+    {
+      "Course": "38958",
+      "Period": 15,
+      "Room": "3263"
+    },
+    {
+      "Course": "38961",
+      "Period": 14,
+      "Room": "3263"
+    },
+    {
+      "Course": "38962",
+      "Period": 18,
+      "Room": "3250"
+    },
+    {
+      "Course": "38964",
+      "Period": 7,
+      "Room": "3262"
+    },
+    {
+      "Course": "38969",
+      "Period": 8,
+      "Room": "3250"
+    },
+    {
+      "Course": "38970",
+      "Period": 22,
+      "Room": "3264"
+    },
+    {
+      "Course": "38971",
+      "Period": 9,
+      "Room": "3247"
+    },
+    {
+      "Course": "38972",
+      "Period": 17,
+      "Room": "3250"
+    },
+    {
+      "Course": "38974",
+      "Period": 17,
+      "Room": "3264"
+    },
+    {
+      "Course": "38975-38976",
+      "Period": 14,
+      "Room": "3261"
+    },
+    {
+      "Course": "38977-38978",
+      "Period": 8,
+      "Room": "3264"
+    },
+    {
+      "Course": "38980",
+      "Period": 23,
+      "Room": "3250"
+    },
+    {
+      "Course": "38981",
+      "Period": 3,
+      "Room": "3248"
+    },
+    {
+      "Course": "38982",
+      "Period": 7,
+      "Room": "3263"
+    },
+    {
+      "Course": "38983",
+      "Period": 21,
+      "Room": "3264"
+    },
+    {
+      "Course": "38984",
+      "Period": 17,
+      "Room": "3249"
+    },
+    {
+      "Course": "38985",
+      "Period": 21,
+      "Room": "3261"
+    },
+    {
+      "Course": "38986",
+      "Period": 1,
+      "Room": "3264"
+    },
+    {
+      "Course": "38987",
+      "Period": 7,
+      "Room": "3256"
+    },
+    {
+      "Course": "38988",
+      "Period": 9,
+      "Room": "3248"
+    },
+    {
+      "Course": "38989",
+      "Period": 20,
+      "Room": "3255"
+    },
+    {
+      "Course": "38992",
+      "Period": 0,
+      "Room": "3248"
+    },
+    {
+      "Course": "38994",
+      "Period": 0,
+      "Room": "3256"
+    },
+    {
+      "Course": "38995",
+      "Period": 19,
+      "Room": "3249"
+    },
+    {
+      "Course": "38996",
+      "Period": 4,
+      "Room": "3254"
+    },
+    {
+      "Course": "38997",
+      "Period": 21,
+      "Room": "3255"
+    },
+    {
+      "Course": "38999",
+      "Period": 18,
+      "Room": "3248"
+    },
+    {
+      "Course": "39000",
+      "Period": 3,
+      "Room": "3263"
+    },
+    {
+      "Course": "39001",
+      "Period": 3,
+      "Room": "3255"
+    },
+    {
+      "Course": "39002",
+      "Period": 8,
+      "Room": "3261"
+    },
+    {
+      "Course": "39004",
+      "Period": 1,
+      "Room": "3262"
+    },
+    {
+      "Course": "39005",
+      "Period": 18,
+      "Room": "3247"
+    },
+    {
+      "Course": "39006",
+      "Period": 3,
+      "Room": "3261"
+    },
+    {
+      "Course": "39009",
+      "Period": 23,
+      "Room": "3248"
+    },
+    {
+      "Course": "39011",
+      "Period": 2,
+      "Room": "3263"
+    },
+    {
+      "Course": "39012",
+      "Period": 15,
+      "Room": "3249"
+    },
+    {
+      "Course": "39013",
+      "Period": 21,
+      "Room": "3262"
+    },
+    {
+      "Course": "39014",
+      "Period": 2,
+      "Room": "3264"
+    },
+    {
+      "Course": "39015",
+      "Period": 14,
+      "Room": "3250"
+    },
+    {
+      "Course": "39017",
+      "Period": 17,
+      "Room": "3247"
+    },
+    {
+      "Course": "39021",
+      "Period": 2,
+      "Room": "3250"
+    },
+    {
+      "Course": "39022",
+      "Period": 15,
+      "Room": "3250"
+    },
+    {
+      "Course": "39023",
+      "Period": 3,
+      "Room": "3249"
+    },
+    {
+      "Course": "39024",
+      "Period": 17,
+      "Room": "3262"
+    },
+    {
+      "Course": "39025",
+      "Period": 21,
+      "Room": "3248"
+    },
+    {
+      "Course": "39026",
+      "Period": 0,
+      "Room": "3261"
+    },
+    {
+      "Course": "39027",
+      "Period": 16,
+      "Room": "3249"
+    },
+    {
+      "Course": "39029",
+      "Period": 18,
+      "Room": "3263"
+    },
+    {
+      "Course": "39030",
+      "Period": 19,
+      "Room": "3262"
+    },
+    {
+      "Course": "39032",
+      "Period": 2,
+      "Room": "3255"
+    },
+    {
+      "Course": "39034",
+      "Period": 15,
+      "Room": "3264"
+    },
+    {
+      "Course": "39039",
+      "Period": 21,
+      "Room": "3247"
+    },
+    {
+      "Course": "39042",
+      "Period": 16,
+      "Room": "3247"
+    },
+    {
+      "Course": "39044",
+      "Period": 6,
+      "Room": "3250"
+    },
+    {
+      "Course": "39046",
+      "Period": 23,
+      "Room": "3264"
+    },
+    {
+      "Course": "39047",
+      "Period": 15,
+      "Room": "3255"
+    },
+    {
+      "Course": "39049",
+      "Period": 19,
+      "Room": "3261"
+    },
+    {
+      "Course": "39051",
+      "Period": 0,
+      "Room": "3247"
+    },
+    {
+      "Course": "39052-39053",
+      "Period": 14,
+      "Room": "3248"
+    },
+    {
+      "Course": "39054",
+      "Period": 16,
+      "Room": "3263"
+    },
+    {
+      "Course": "39055",
+      "Period": 2,
+      "Room": "3262"
+    },
+    {
+      "Course": "39056",
+      "Period": 23,
+      "Room": "3263"
+    },
+    {
+      "Course": "39057",
+      "Period": 18,
+      "Room": "3262"
+    },
+    {
+      "Course": "39059",
+      "Period": 9,
+      "Room": "3249"
+    },
+    {
+      "Course": "39060",
+      "Period": 4,
+      "Room": "3263"
+    },
+    {
+      "Course": "39062",
+      "Period": 20,
+      "Room": "3250"
+    },
+    {
+      "Course": "39063",
+      "Period": 20,
+      "Room": "3263"
+    },
+    {
+      "Course": "39065",
+      "Period": 14,
+      "Room": "3262"
+    },
+    {
+      "Course": "39067",
+      "Period": 9,
+      "Room": "3263"
+    },
+    {
+      "Course": "39068",
+      "Period": 0,
+      "Room": "3249"
+    },
+    {
+      "Course": "39070",
+      "Period": 20,
+      "Room": "3261, 3264"
+    },
+    {
+      "Course": "39072",
+      "Period": 19,
+      "Room": "3255"
+    },
+    {
+      "Course": "39074",
+      "Period": 15,
+      "Room": "3247"
+    },
+    {
+      "Course": "39075",
+      "Period": 4,
+      "Room": "3249"
+    },
+    {
+      "Course": "39076",
+      "Period": 3,
+      "Room": "3247"
+    },
+    {
+      "Course": "39078",
+      "Period": 9,
+      "Room": "3256"
+    },
+    {
+      "Course": "39079",
+      "Period": 6,
+      "Room": "3254"
+    },
+    {
+      "Course": "39080",
+      "Period": 17,
+      "Room": "3263"
+    },
+    {
+      "Course": "39081",
+      "Period": 22,
+      "Room": "3254"
+    },
+    {
+      "Course": "39082",
+      "Period": 19,
+      "Room": "3250"
+    },
+    {
+      "Course": "39083",
+      "Period": 8,
+      "Room": "3249"
+    },
+    {
+      "Course": "39085",
+      "Period": 5,
+      "Room": "3262"
+    },
+    {
+      "Course": "39087",
+      "Period": 2,
+      "Room": "3247"
+    },
+    {
+      "Course": "39089",
+      "Period": 9,
+      "Room": "3250"
+    },
+    {
+      "Course": "39092",
+      "Period": 22,
+      "Room": "3248"
+    },
+    {
+      "Course": "39094",
+      "Period": 6,
+      "Room": "3261"
+    },
+    {
+      "Course": "39099",
+      "Period": 21,
+      "Room": "3250"
+    },
+    {
+      "Course": "39100",
+      "Period": 6,
+      "Room": "3249"
+    },
+    {
+      "Course": "39102",
+      "Period": 15,
+      "Room": "3261"
+    },
+    {
+      "Course": "39103",
+      "Period": 23,
+      "Room": "3255"
+    },
+    {
+      "Course": "39105",
+      "Period": 2,
+      "Room": "3256"
+    },
+    {
+      "Course": "39107",
+      "Period": 6,
+      "Room": "3255"
+    },
+    {
+      "Course": "39108",
+      "Period": 8,
+      "Room": "3256"
+    },
+    {
+      "Course": "39110",
+      "Period": 22,
+      "Room": "3250"
+    },
+    {
+      "Course": "39112",
+      "Period": 15,
+      "Room": "3248"
+    },
+    {
+      "Course": "39113",
+      "Period": 7,
+      "Room": "3264, 3261"
+    },
+    {
+      "Course": "39117",
+      "Period": 6,
+      "Room": "3262"
+    },
+    {
+      "Course": "39118",
+      "Period": 22,
+      "Room": "3261"
+    },
+    {
+      "Course": "39119",
+      "Period": 14,
+      "Room": "3264"
+    },
+    {
+      "Course": "39120",
+      "Period": 9,
+      "Room": "3261"
+    },
+    {
+      "Course": "39121",
+      "Period": 5,
+      "Room": "3263"
+    },
+    {
+      "Course": "39122",
+      "Period": 18,
+      "Room": "3261"
+    },
+    {
+      "Course": "39124",
+      "Period": 8,
+      "Room": "3263"
+    },
+    {
+      "Course": "39125",
+      "Period": 1,
+      "Room": "3249"
+    },
+    {
+      "Course": "39126",
+      "Period": 1,
+      "Room": "3261"
+    },
+    {
+      "Course": "39127",
+      "Period": 20,
+      "Room": "3262"
+    },
+    {
+      "Course": "39128",
+      "Period": 23,
+      "Room": "3247"
+    },
+    {
+      "Course": "39232",
+      "Period": 0,
+      "Room": "3264"
+    },
+    {
+      "Course": "39239",
+      "Period": 22,
+      "Room": "3249"
+    },
+    {
+      "Course": "39265",
+      "Period": 2,
+      "Room": "3249"
+    },
+    {
+      "Course": "39279",
+      "Period": 14,
+      "Room": "3249"
+    },
+    {
+      "Course": "39280",
+      "Period": 16,
+      "Room": "3250"
+    },
+    {
+      "Course": "39399",
+      "Period": 1,
+      "Room": "3263"
+    }
+  ],
+  "Cost": 0
+}
