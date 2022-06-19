@@ -27,15 +27,6 @@ import com.timetabling.app.model.Room;
 import com.timetabling.app.model.Solution;
 import com.timetabling.app.util.JSONUtils;
 
-
-
-import org.json.simple.parser.JSONParser;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 public class Timetabling {
 	
 	private static Map<Period, List<Room>> periodRoomRelation = new HashMap<Period, List<Room>>();
@@ -43,20 +34,13 @@ public class Timetabling {
 	private static Solution best = null;
 	
 	public static void main(String[] args) throws ParseException {
-		Instance inst =  JSONUtils.convert(JSONUtils.getFileData("C:/Users/Admin/Desktop/Master/Semestri i dyte/Algoritmet e Inspiruara nga Natyra/ExaminationTimetabling-master/ExaminationTimetabling-master/src/main/java/com/timetabling/app/D1-2-16.json"), new TypeReference<Instance>(){});
-		// ObjectMapper mapper = new ObjectMapper();
-		// try {
-		// 	System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(inst));
-		// } catch (IOException e) {
-		// 	 e.printStackTrace();
-		// }
-		// System.out.println();
 
+		Instance inst =  JSONUtils.convert(JSONUtils.getFileData("C:/Users/Admin/Desktop/Master/Semestri i dyte/Uebi Semantik/ETT-tabuSearch/ExaminationTimetabling/src/main/java/com/timetabling/app/D5-3-18.json"), new TypeReference<Instance>(){});
 		List<Course> Courses = inst.getCourses();
 		List<Room> Rooms = inst.getRooms();
 		List<Curricula> curriculas = inst.getCurricula();
 		List<Solution> tabuList = new ArrayList<Solution>();
-		int numberOfTweak = 5;
+		int numberOfTweaks = 5;
 		
 		Solution solution = generateSolution(inst, Courses, Rooms, curriculas);
 		calculateCost(solution, inst);
@@ -73,7 +57,7 @@ public class Timetabling {
 			R = new Solution.Builder().assignments(applyTweaks(solution, inst)).Cost(Cost).build();
 			calculateCost(R, inst);
 			// System.out.println(R.getCost());
-			for (int i = 0; i < numberOfTweak; i++) {
+			for (int i = 0; i < numberOfTweaks; i++) {
 				Cost = 0;
 				//Apliko operatoret mutation ose swap:
 				Solution W = new Solution.Builder().assignments(applyTweaks(solution, inst)).Cost(Cost).build();
@@ -94,7 +78,7 @@ public class Timetabling {
 			repeat++;
 		}
 		System.out.println(best);
-		JSONUtils.saveFile(JSONUtils.convert(best), "Assignments.json");
+		JSONUtils.saveFile(JSONUtils.convert(best), "D5-3-18.json");
 	}
 
 	private static Solution generateSolution(Instance inst, List<Course> courses, List<Room> rooms,
@@ -105,7 +89,7 @@ public class Timetabling {
 		curriculas.stream().forEach(curricula -> {
 			checkingConstraints(inst, courses, exams, curricula, curricula.getPrimaryCourses(), assignments, inst.getPrimaryPrimaryDistance());
 			checkingConstraints(inst, courses, exams, curricula, curricula.getSecondaryCourses(), assignments, inst.getPrimarySecondaryDistance());
-			System.out.println(curricula);
+			
 		});
 		return new Solution.Builder().assignments(assignments).build();
 	}
@@ -138,6 +122,7 @@ public class Timetabling {
 							events.add(event);
 						});
 					}
+
 					Assignment assignment = new Assignment.Builder().Course(exam.getCourse().getCourse())
 							.Events(events).build();
 					
